@@ -1,0 +1,51 @@
+body {
+    background-color: #f8e1f4; /* Soft pink background */
+    color: #4b0082; /* Indigo text color */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #e91e63; /* Pink button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #d81b60; /* Darker pink on hover */
+}
+
+button:active {
+    transform: scale(0.95); /* Button press effect */
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #6a1b9a; /* Dark purple for footer text */
+}
+
+/* added video / control styles (mobile-first) */
+.video-area { display:flex; flex-direction:column; align-items:center; width:100%; }
+.video-wrap { width:100%; border-radius:12px; overflow:hidden; background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95)); padding:8px; box-shadow: 0 6px 18px rgba(107,59,220,0.04); }
+.video-preview { width:100%; height:auto; display:block; border-radius:8px; background:#000; }
+
+/* small utility for the "Next" button on the love page */
+.next-btn .btn { padding:12px 18px; border-radius:14px; }
+
+/* keep floating hearts subtle on small screens */
+@media (max-width:420px){
+  .heart-big{ font-size:40px }
+  .video-preview{ max-height:260px }
+}

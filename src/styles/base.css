@@ -1,0 +1,108 @@
+/* Mobile-first base styles */
+:root{
+  --bg:#efe7ff;
+  --primary:#6b3bdc; /* purple */
+  --accent:#d9b6ff;  /* lavender */
+  --soft:#ffd9ec;    /* soft pink */
+  --muted:#6b6b7a;
+  --white:#fff;
+  --glass: rgba(255,255,255,0.7);
+  --radius:18px;
+  --shadow: 0 8px 22px rgba(107,59,220,0.12);
+  --shadow-soft: 0 6px 18px rgba(107,59,220,0.07);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{height:100%}
+body{
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg),#fff);
+  color: #241b2b;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.container{
+  width:100%;
+  max-width:460px;
+  margin: 0 auto;
+  text-align:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.6));
+  border-radius: var(--radius);
+  padding:28px;
+  box-shadow: var(--shadow);
+  position:relative;
+  overflow:visible;
+}
+.headline{
+  font-size:1.6rem;
+  line-height:1.2;
+  font-weight:700;
+  color:var(--primary);
+  margin-bottom:10px;
+}
+.subtle{
+  color:var(--muted);
+  margin-bottom:18px;
+}
+.small-print{
+  color:var(--muted);
+  font-size:0.85rem;
+  margin-top:14px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border:0;
+  border-radius:14px;
+  padding:14px 20px;
+  font-size:1.05rem;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform .18s ease, box-shadow .18s ease;
+  user-select:none;
+  touch-action:manipulation;
+}
+.btn:active{ transform: scale(.98) }
+.btn:focus{ outline: 3px solid rgba(107,59,220,0.12); outline-offset:4px; }
+
+.btn-primary{
+  background: linear-gradient(180deg,var(--primary), #5430c1);
+  color:var(--white);
+}
+.btn-ghost{
+  background: linear-gradient(180deg,var(--glass), rgba(255,255,255,0.85));
+  color: #5a3b8a;
+  border: 1px solid rgba(107,59,220,0.08);
+}
+
+/* button layout */
+.button-container{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin-top:8px;
+  margin-bottom:6px;
+}
+.button-container .btn{
+  min-width: 42%;
+}
+
+/* decorative hearts */
+.hearts { position: absolute; inset: auto 8px 8px auto; pointer-events:none; }
+.heart{ font-size:22px; opacity:.9; transform-origin:center; }
+
+/* Responsive tweaks */
+@media (min-width:520px){
+  .headline{ font-size:2rem }
+  .btn{ font-size:1.1rem; padding:16px 22px; }
+}

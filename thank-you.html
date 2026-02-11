@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>A-J 2026</title>
+  <link rel="stylesheet" href="src/styles/base.css">
+  <link rel="stylesheet" href="src/styles/theme.css">
+  <style>
+    /* full-screen video background */
+    html,body{height:100%;margin:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; display:flex; align-items:center; justify-content:center; background:#000; overflow:hidden}
+    video#bgVideo{position:fixed; inset:0; width:100%; height:100%; object-fit:cover; z-index:0}
+    /* dim + blur layer for readable text */
+    .overlay-layer{position:fixed; inset:0; background:linear-gradient(rgba(12,6,30,0.35), rgba(255,255,255,0.06)); z-index:1; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(6px)}
+    /* centered content card */
+    .card{position:relative; z-index:2; max-width:640px; width:92%; padding:26px; border-radius:18px; text-align:center; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); color:#fff; box-shadow:0 10px 30px rgba(0,0,0,0.45);}
+    .thank-title{font-size:2.05rem; color: #ffd6ea; font-weight:800; margin-bottom:8px; text-shadow:0 6px 18px rgba(107,59,220,0.22)}
+    .love{font-size:1.05rem; color:#ffeef8; margin-bottom:10px}
+    .small-note{font-size:0.95rem; color:rgba(255,255,255,0.85)}
+    /* play overlay when autoplay blocked */
+    #play-overlay{position:fixed; inset:0; z-index:3; display:none; align-items:center; justify-content:center; background:linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35))}
+    .play-btn{background: linear-gradient(180deg,#7a49ff,#5b28d9); color:white; border:0; padding:16px 22px; border-radius:40px; font-weight:800; font-size:1rem; box-shadow:0 10px 30px rgba(90,40,200,0.25); display:flex; gap:10px; align-items:center; cursor:pointer; touch-action:manipulation}
+    .play-btn .emoji{font-size:1.1rem}
+    /* small responsive tweaks */
+    @media (min-width:720px){ .thank-title{font-size:2.6rem} .card{padding:32px} }
+  </style>
+</head>
+<body>
+  <!-- background video (covers entire page) -->
+  <video id="bgVideo" src="media/vid.mp4" autoplay muted loop playsinline webkit-playsinline></video>
+
+  <!-- background audio -->
+  <audio id="bgAudio" src="media/firstlove.mp3" preload="auto" loop></audio>
+
+  <div class="overlay-layer" aria-hidden="true"></div>
+
+  <!-- central content -->
+  <main class="card" role="main" aria-live="polite">
+    <div class="thank-title">Thank you 💕</div>
+    <div class="love">I love you ❤️</div>
+    <div class="small-note">You're my favorite person — this moment is for you.</div>
+  </main>
+
+  <!-- Play overlay shown only when autoplay is blocked -->
+  <!-- <div id="play-overlay" aria-hidden="true">
+    <button id="play-btn" class="play-btn" aria-label="Play video and music">
+      <span class="emoji">▶️</span>
+      <span>Tap to play video & music</span>
+    </button>
+  </div> -->
+
+  <script>
+    // Try to play both video and audio on load. If blocked, show the overlay play button.
+    document.addEventListener('DOMContentLoaded', () => {
+      const video = document.getElementById('bgVideo');
+      const audio = document.getElementById('bgAudio');
+      const overlay = document.getElementById('play-overlay');
+      const playBtn = document.getElementById('play-btn');
+
+      // preferred audio level
+      audio.volume = 0.78;
+
+      async function attemptAutoplay(){
+        // browsers usually allow muted video autoplay; audio often blocked
+        try {
+          // try to autoplay video & audio together
+          await Promise.all([ video.play(), audio.play() ]);
+          // success: ensure video is unmuted if it was OK
+          try { video.muted = false; } catch(e){}
+          overlay.style.display = 'none';
+        } catch (err) {
+          // autoplay blocked for at least one; keep video muted so it can play visually
+          try { video.muted = true; video.play().catch(()=>{}); } catch(e){}
+          overlay.style.display = 'flex';
+        }
+      }
+
+      // user gesture to start both (overlay button & global first interaction)
+      async function startBoth(){
+        try {
+          // unmute video so the visual sound matches audio (may still remain muted on some browsers)
+          video.muted = false;
+          await Promise.all([ video.play(), audio.play() ]);
+        } catch(e){
+          // ensure at least video plays visually (muted) and audio tries again
+          try { video.muted = true; video.play().catch(()=>{}); } catch(e){}
+          audio.play().catch(()=>{});
+        } finally {
+          overlay.style.display = 'none';
+          // remove global listeners once started
+          window.removeEventListener('touchstart', startBoth);
+          window.removeEventListener('click', startBoth);
+        }
+      }
+
+      // initial attempt
+      attemptAutoplay();
+
+      // overlay and first interaction should start playback
+      playBtn.addEventListener('click', startBoth, {passive:true});
+      window.addEventListener('touchstart', startBoth, {passive:true});
+      window.addEventListener('click', startBoth);
+    });
+  </script>
+</body>
+</html>

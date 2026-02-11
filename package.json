@@ -1,0 +1,22 @@
+{
+  "name": "valentines-website",
+  "version": "1.0.0",
+  "description": "A playful Valentine's Day website that asks users to be their Valentine.",
+  "main": "src/js/main.js",
+  "scripts": {
+    "start": "live-server",
+    "build": "echo 'Build step can be added here.'"
+  },
+  "keywords": [
+    "valentine",
+    "romantic",
+    "website",
+    "playful"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Valentine's Day</title>
+    <link rel="stylesheet" href="src/styles/base.css">
+    <link rel="stylesheet" href="src/styles/layout.css">
+    <link rel="stylesheet" href="src/styles/theme.css">
+</head>
+<body>
+    <div class="page page-main">
+        <div class="container">
+            <h1 class="headline">Will you be my Valentine? <span class="emoji">💖</span></h1>
+
+            <p class="subtle">Choose wisely 😉</p>
+
+            <div class="button-container" aria-hidden="false">
+                <button id="yes-button" class="btn btn-primary">Yes <span class="emoji">💘</span></button>
+                <button id="no-button" class="btn btn-ghost">No <span class="emoji">😅</span></button>
+            </div>
+        </div>
+
+        <!-- decorative floating hearts -->
+        <div class="hearts" aria-hidden="true">
+            <div class="heart h1">💜</div>
+            <div class="heart h2">💗</div>
+            <div class="heart h3">💖</div>
+        </div>
+    </div>
+
+    <!-- hidden anchor so SPA shell can intercept navigation -->
+    <a id="thankLink" href="thank-you.html" style="display:none" aria-hidden="true"></a>
+
+    <!-- Ensure fragment initializer runs when this page is loaded standalone -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        try {
+          if (typeof window.onFragmentLoaded === 'function') {
+            window.onFragmentLoaded();
+          } else if (typeof window.initLovePage === 'function') {
+            window.initLovePage();
+          }
+        } catch (e) { /* ignore */ }
+      });
+    </script>
+
+    <script src="src/js/main.js" defer></script>
+    <script src="src/js/interactions.js" defer></script>
+</body>
+</html>
