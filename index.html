@@ -257,6 +257,20 @@ function fadeVolume(toVal = LOW_VOL, duration = 800) {
         loadFragment(location.pathname, true);
       }
     });
+
+
+
+  // Pause music when the user switches apps or hides the tab
+document.addEventListener('visibilitychange', () => {
+  const audio = document.getElementById('bgAudio');
+  if (document.hidden) {
+    audio.pause();
+  } else {
+    // Only resume if it was already playing before
+    audio.play().catch(() => { /* handle autoplay block if needed */ });
+  }
+});
+    
   })();
   </script>
 
@@ -264,4 +278,5 @@ function fadeVolume(toVal = LOW_VOL, duration = 800) {
   <script src="src/js/main.js" defer></script>
   <script src="src/js/interactions.js" defer></script>
 </body>
+
 </html>
